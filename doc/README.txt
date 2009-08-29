@@ -1,6 +1,8 @@
 ·----------------------------------------------------------------------·
  CD / DVD Spindle Search Plugin for Google Desktop Search
  Copyright (c) 2005 Manas Tungare, http://www.manastungare.com/
+ Copyright (c) 2009, spindle-search developers.                    
+ http://code.google.com/p/spindle-search/                          
 ·----------------------------------------------------------------------·
  This program is free software; you can redistribute it and/or
  modify it under the terms of the GNU General Public License
@@ -29,5 +31,5 @@
 
 ·----------------------------------------------------------------------·
   Downloads, Discussion Forum, Bug Reports:
-  http://www.manastungare.com/projects/spindle-search/
+  http://code.google.com/p/spindle-search/
 ·----------------------------------------------------------------------·
