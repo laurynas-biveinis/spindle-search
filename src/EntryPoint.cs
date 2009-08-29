@@ -33,6 +33,7 @@ namespace  Org.ManasTungare.SpindleSearch  {
     /// Go figure ...
     /// </summary>
     /// <param name="args">...</param>
+    [STAThread]
     public static void Main(string[] args) {
       Application.SafeTopLevelCaptionFormat = Application.ProductName;
       Application.EnableVisualStyles();
