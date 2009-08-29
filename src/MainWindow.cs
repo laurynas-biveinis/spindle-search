@@ -840,7 +840,7 @@ namespace Org.ManasTungare.SpindleSearch {
     private void lnkManasTungare_LinkClicked(object sender, System.Windows.Forms.LinkLabelLinkClickedEventArgs e) {
       try {
         ProcessStartInfo spawnBrowser = new ProcessStartInfo();
-        spawnBrowser.FileName = "http://www.manastungare.com/";
+        spawnBrowser.FileName = "http://code.google.com/p/spindle-search/";
         Process.Start(spawnBrowser);
       }
       catch(Exception) {
