@@ -1,6 +1,8 @@
 //-------------------------------------------------------------------\\
 // CD / DVD Spindle Search Plugin for Google Desktop Search          \\
 // Copyright (c) 2005, Manas Tungare. http://www.manastungare.com/   \\
+// Copyright (c) 2009, spindle-search developers.                    \\
+// http://code.google.com/p/spindle-search/                          \\
 //-------------------------------------------------------------------\\
 // This program is free software; you can redistribute it and/or     \\
 // modify it under the terms of the GNU General Public License       \\
@@ -78,13 +80,13 @@ namespace Org.ManasTungare.SpindleSearch {
           fileInfo.Text = formattedOutput;
           fileLink.Text = spindleFile.Host.ToUpper() + ":" + HttpUtility.UrlDecode(spindleFile.AbsolutePath).Replace('/', '\\');
         }
-        catch(Exception e) {
+        catch(Exception) {
           // If unable to parse, degrade gracefully and show the text as-is.
           fileInfo.Text = spindleUri;
           fileLink.Text = spindleFile.Host.ToUpper() + ":" + HttpUtility.UrlEncode(spindleFile.AbsolutePath).Replace('/', '\\');
         }
       }
-      catch (Exception e) {
+      catch (Exception) {
         // If unable to parse, degrade gracefully and show the text as-is.
         fileInfo.Text = spindleUri;
         fileLink.Text = spindleUri;
@@ -250,7 +252,7 @@ namespace Org.ManasTungare.SpindleSearch {
           Process.Start(spawnApp);
           return true;
         }
-        catch(Exception ex) {
+        catch(Exception) {
           MessageBox.Show ("Unable to open file. Please check that you have an application installed " + 
             "for opening files of type \"" + ( new FileInfo(fileName) ).Extension + "\"",
             Application.ProductName,
