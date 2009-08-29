@@ -1,253 +1,180 @@
-<VisualStudioProject>
-    <CSHARP
-        ProjectType = "Local"
-        ProductVersion = "7.10.3077"
-        SchemaVersion = "2.0"
-        ProjectGuid = "{28D7C6EB-4D77-488B-B4B6-221518E394B7}"
-    >
-        <Build>
-            <Settings
-                ApplicationIcon = "res\Spindle.ico"
-                AssemblyKeyContainerName = ""
-                AssemblyName = "SpindleSearch"
-                AssemblyOriginatorKeyFile = ""
-                DefaultClientScript = "JScript"
-                DefaultHTMLPageLayout = "Grid"
-                DefaultTargetSchema = "IE50"
-                DelaySign = "false"
-                OutputType = "WinExe"
-                PreBuildEvent = ""
-                PostBuildEvent = ""
-                RootNamespace = "Org.ManasTungare.SpindleSearch"
-                RunPostBuildEvent = "OnBuildSuccess"
-                StartupObject = "Org.ManasTungare.SpindleSearch.EntryPoint"
-            >
-                <Config
-                    Name = "Debug"
-                    AllowUnsafeBlocks = "false"
-                    BaseAddress = "285212672"
-                    CheckForOverflowUnderflow = "false"
-                    ConfigurationOverrideFile = ""
-                    DefineConstants = ""
-                    DocumentationFile = ""
-                    DebugSymbols = "true"
-                    FileAlignment = "4096"
-                    IncrementalBuild = "false"
-                    NoStdLib = "false"
-                    NoWarn = ""
-                    Optimize = "false"
-                    OutputPath = "bin\Debug\"
-                    RegisterForComInterop = "false"
-                    RemoveIntegerChecks = "false"
-                    TreatWarningsAsErrors = "false"
-                    WarningLevel = "1"
-                />
-                <Config
-                    Name = "Release"
-                    AllowUnsafeBlocks = "false"
-                    BaseAddress = "285212672"
-                    CheckForOverflowUnderflow = "true"
-                    ConfigurationOverrideFile = ""
-                    DefineConstants = ""
-                    DocumentationFile = "/doc.xml"
-                    DebugSymbols = "false"
-                    FileAlignment = "4096"
-                    IncrementalBuild = "false"
-                    NoStdLib = "false"
-                    NoWarn = ""
-                    Optimize = "true"
-                    OutputPath = "bin\Release\"
-                    RegisterForComInterop = "false"
-                    RemoveIntegerChecks = "false"
-                    TreatWarningsAsErrors = "false"
-                    WarningLevel = "1"
-                />
-            </Settings>
-            <References>
-                <Reference
-                    Name = "GoogleDesktopWrapper"
-                    Project = "{3E9E89E0-6594-4463-BFA1-F823CF51D693}"
-                    Package = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"
-                />
-                <Reference
-                    Name = "system.xml"
-                    AssemblyName = "System.Xml"
-                    HintPath = "C:\WINDOWS\Microsoft.NET\Framework\v1.1.4322\system.xml.dll"
-                />
-                <Reference
-                    Name = "system.web"
-                    AssemblyName = "System.Web"
-                    HintPath = "C:\WINDOWS\Microsoft.NET\Framework\v1.1.4322\system.web.dll"
-                />
-                <Reference
-                    Name = "system.windows.forms"
-                    AssemblyName = "System.Windows.Forms"
-                    HintPath = "C:\WINDOWS\Microsoft.NET\Framework\v1.1.4322\system.windows.forms.dll"
-                />
-                <Reference
-                    Name = "system"
-                    AssemblyName = "System"
-                    HintPath = "C:\WINDOWS\Microsoft.NET\Framework\v1.1.4322\system.dll"
-                />
-                <Reference
-                    Name = "system.drawing"
-                    AssemblyName = "System.Drawing"
-                    HintPath = "C:\WINDOWS\Microsoft.NET\Framework\v1.1.4322\system.drawing.dll"
-                />
-                <Reference
-                    Name = "microsoft.visualbasic"
-                    AssemblyName = "Microsoft.VisualBasic"
-                    HintPath = "C:\WINDOWS\Microsoft.NET\Framework\v1.1.4322\microsoft.visualbasic.dll"
-                />
-                <Reference
-                    Name = "System.Data"
-                    AssemblyName = "System.Data"
-                    HintPath = "C:\WINDOWS\Microsoft.NET\Framework\v1.1.4322\System.Data.dll"
-                />
-                <Reference
-                    Name = "ICSharpCode.SharpZipLib"
-                    AssemblyName = "ICSharpCode.SharpZipLib"
-                    HintPath = "..\Libraries\083aSharpZipLib\ICSharpCode.SharpZipLib.dll"
-                />
-            </References>
-        </Build>
-        <Files>
-            <Include>
-                <File
-                    RelPath = "dist\Description.txt"
-                    BuildAction = "Content"
-                />
-                <File
-                    RelPath = "dist\NSIS Script.nsi"
-                    BuildAction = "None"
-                />
-                <File
-                    RelPath = "doc\CHANGELOG.txt"
-                    BuildAction = "Content"
-                />
-                <File
-                    RelPath = "doc\LICENSE.txt"
-                    BuildAction = "Content"
-                />
-                <File
-                    RelPath = "doc\README.txt"
-                    BuildAction = "Content"
-                />
-                <File
-                    RelPath = "res\Spindle.ico"
-                    BuildAction = "Content"
-                />
-                <File
-                    RelPath = "res\spindle.psd"
-                    BuildAction = "None"
-                />
-                <File
-                    RelPath = "res\spindle-16x16.png"
-                    BuildAction = "Content"
-                />
-                <File
-                    RelPath = "res\spindle-24x24.png"
-                    BuildAction = "Content"
-                />
-                <File
-                    RelPath = "res\spindle-32x32.png"
-                    BuildAction = "Content"
-                />
-                <File
-                    RelPath = "res\spindle-48x48.png"
-                    BuildAction = "Content"
-                />
-                <File
-                    RelPath = "src\AssemblyInfo.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "src\Catalog.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "src\EntryPoint.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "src\FileCatalogedEventArgs.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "src\FileIndexedEventArgs.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "src\Global.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "src\GoogleDesktop.snk"
-                    BuildAction = "None"
-                />
-                <File
-                    RelPath = "src\Indexer.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "src\InvalidVolumeException.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "src\InvalidVolumeTypeException.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "src\MainWindow.cs"
-                    SubType = "Form"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "src\MainWindow.resx"
-                    DependentUpon = "MainWindow.cs"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "src\SpindleFileInfo.cs"
-                    SubType = "Form"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "src\SpindleFileInfo.resx"
-                    DependentUpon = "SpindleFileInfo.cs"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "src\SpindleSearchException.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "src\VolumeAccessException.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "src\VolumeInfo.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "src\ZipWriter.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-            </Include>
-        </Files>
-    </CSHARP>
-</VisualStudioProject>
-
+﻿<Project DefaultTargets="Build" ToolsVersion="3.5" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectType>Local</ProjectType>
+    <ProductVersion>8.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{28D7C6EB-4D77-488B-B4B6-221518E394B7}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ApplicationIcon>res\Spindle.ico</ApplicationIcon>
+    <AssemblyKeyContainerName>
+    </AssemblyKeyContainerName>
+    <AssemblyName>SpindleSearch</AssemblyName>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>Org.ManasTungare.SpindleSearch</RootNamespace>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <StartupObject>Org.ManasTungare.SpindleSearch.EntryPoint</StartupObject>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>0.0</OldToolsVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>
+    </DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>1</WarningLevel>
+    <DebugType>full</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>
+    </DefineConstants>
+    <DocumentationFile>/doc.xml</DocumentationFile>
+    <DebugSymbols>false</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>1</WarningLevel>
+    <DebugType>none</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="GoogleDesktopWrapper">
+      <Name>GoogleDesktopWrapper</Name>
+      <Project>{3E9E89E0-6594-4463-BFA1-F823CF51D693}</Project>
+      <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
+    </ProjectReference>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <Name>ICSharpCode.SharpZipLib</Name>
+      <HintPath>..\Libraries\083aSharpZipLib\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualBasic">
+      <Name>microsoft.visualbasic</Name>
+    </Reference>
+    <Reference Include="System">
+      <Name>system</Name>
+    </Reference>
+    <Reference Include="System.Data">
+      <Name>System.Data</Name>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <Name>system.drawing</Name>
+    </Reference>
+    <Reference Include="System.Web">
+      <Name>system.web</Name>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <Name>system.windows.forms</Name>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Name>system.xml</Name>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="dist\Description.txt" />
+    <Content Include="doc\CHANGELOG.txt" />
+    <Content Include="doc\LICENSE.txt" />
+    <Content Include="doc\README.txt" />
+    <Content Include="res\spindle-16x16.png" />
+    <Content Include="res\spindle-24x24.png" />
+    <Content Include="res\spindle-32x32.png" />
+    <Content Include="res\spindle-48x48.png" />
+    <Content Include="res\Spindle.ico" />
+    <None Include="dist\NSIS Script.nsi" />
+    <None Include="res\spindle.psd" />
+    <None Include="src\GoogleDesktop.snk" />
+    <Compile Include="src\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="src\Catalog.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="src\EntryPoint.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="src\FileCatalogedEventArgs.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="src\FileIndexedEventArgs.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="src\Global.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="src\Indexer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="src\InvalidVolumeException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="src\InvalidVolumeTypeException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="src\MainWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\SpindleFileInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\SpindleSearchException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="src\VolumeAccessException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="src\VolumeInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="src\ZipWriter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <EmbeddedResource Include="src\MainWindow.resx">
+      <DependentUpon>MainWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\SpindleFileInfo.resx">
+      <DependentUpon>SpindleFileInfo.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>
