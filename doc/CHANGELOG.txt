@@ -1,0 +1,23 @@
+--------------------------------------------------------------------------
+ CD / DVD Spindle Search
+ Copyright (c) 2005, Manas Tungare, http://www.manastungare.com/
+--------------------------------------------------------------------------
+
+ VERSION HISTORY:
+   1.2.1   2005-04-02    Zips up the catalog before saving it to disk. 
+                         Improved error-handling with GDS errors.
+
+   1.2     2005-03-31    Fixed a major bug in the handling of files 
+                         containing special characters. Now each URI is
+                         URL-encoded before being added to the index.
+                         Added features to save/load from catalog files.
+                         
+   1.1     2005-03-23    Major refactoring; the GDS API is now 
+                         encapsulated within the .Net Wrapper for GDS.
+                         
+   1.0.1   2005-03-16    Added two new buttons to the View File dialog: 
+                         "Open File" and "Open Folder". 
+                         
+   1.0     2005-03-15    Initial Create
+
+--------------------------------------------------------------------------
