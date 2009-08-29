@@ -1,7 +1,7 @@
 ﻿<Project DefaultTargets="Build" ToolsVersion="3.5" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ProjectType>Local</ProjectType>
-    <ProductVersion>8.0.30729</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{28D7C6EB-4D77-488B-B4B6-221518E394B7}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -74,15 +74,6 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="GoogleDesktopWrapper">
-      <Name>GoogleDesktopWrapper</Name>
-      <Project>{3E9E89E0-6594-4463-BFA1-F823CF51D693}</Project>
-      <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
-    </ProjectReference>
-    <Reference Include="ICSharpCode.SharpZipLib">
-      <Name>ICSharpCode.SharpZipLib</Name>
-      <HintPath>..\Libraries\083aSharpZipLib\ICSharpCode.SharpZipLib.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.VisualBasic">
       <Name>microsoft.visualbasic</Name>
     </Reference>
@@ -169,6 +160,16 @@
     <EmbeddedResource Include="src\SpindleFileInfo.resx">
       <DependentUpon>SpindleFileInfo.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\gds-dot-net\GoogleDesktopWrapper.csproj">
+      <Project>{3E9E89E0-6594-4463-BFA1-F823CF51D693}</Project>
+      <Name>GoogleDesktopWrapper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SharpZipLib\SrcSamples\src\ICSharpCode.SharpZLib.csproj">
+      <Project>{0E7413FF-EB9E-4714-ACF2-BE3A6A7B2FFD}</Project>
+      <Name>ICSharpCode.SharpZLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
