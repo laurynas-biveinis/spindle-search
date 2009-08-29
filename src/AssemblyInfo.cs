@@ -1,6 +1,8 @@
 //-------------------------------------------------------------------\\
 // CD / DVD Spindle Search Plugin for Google Desktop Search          \\
 // Copyright (c) 2005, Manas Tungare. http://www.manastungare.com/   \\
+// Copyright (c) 2009, spindle-search developers.                    \\
+// http://code.google.com/p/spindle-search/                          \\
 //-------------------------------------------------------------------\\
 // This program is free software; you can redistribute it and/or     \\
 // modify it under the terms of the GNU General Public License       \\
@@ -30,5 +32,4 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyVersion("1.2.2")]
 
 [assembly: AssemblyDelaySign(false)]
-[assembly: AssemblyKeyFile("..\\..\\src\\GoogleDesktop.snk")]
 [assembly: AssemblyKeyName("")]
