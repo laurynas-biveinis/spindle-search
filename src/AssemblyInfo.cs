@@ -29,7 +29,7 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyProduct("CD / DVD Spindle Search")]
 [assembly: AssemblyCopyright("Manas Tungare, www.manastungare.com")]
 [assembly: AssemblyCulture("")]		
-[assembly: AssemblyVersion("1.2.2")]
+[assembly: AssemblyVersion("1.3")]
 
 [assembly: AssemblyDelaySign(false)]
 [assembly: AssemblyKeyName("")]
