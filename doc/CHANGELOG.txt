@@ -6,11 +6,12 @@
 --------------------------------------------------------------------------
 
  VERSION HISTORY:
-   1.3     2009-08-29    Fix error if drive D: does not exist or is not 
+   1.3     2009-10-25    Fix error if drive D: does not exist or is not 
                          writable.
                          Allow to load multiple catalog files at once.
                          Upgrade to Visual Studio 2008, various code
                          cleanups and minor fixes.
+                         Recreate the installer using NSIS from scratch.
 
    1.2.1   2005-04-02    Zips up the catalog before saving it to disk. 
                          Improved error-handling with GDS errors.
