@@ -1,9 +1,9 @@
 !include "MUI.nsh"
 
 # TODO: version number should be specified once in whole source tree
-outFile "SpindleSearch-1.3.0.exe"
+outFile "SpindleSearch-1.3.1.exe"
 
-Name "Spindle Search for Google Desktop 1.3"
+Name "Spindle Search for Google Desktop 1.3.1"
 
 InstallDir "$PROGRAMFILES\Spindle Search"
 
