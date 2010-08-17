@@ -25,11 +25,11 @@ using System.Runtime.CompilerServices;
 // associated with an assembly.
 [assembly: AssemblyTitle("CD / DVD Spindle Search")]
 [assembly: AssemblyDescription("CD / DVD Spindle Search is a plugin for Google Desktop Search that searches within removable storage.")]
-[assembly: AssemblyCompany("Manas Tungare, www.manastungare.com")]
+[assembly: AssemblyCompany("http://code.google.com/p/spindle-search/")]
 [assembly: AssemblyProduct("CD / DVD Spindle Search")]
-[assembly: AssemblyCopyright("Manas Tungare, www.manastungare.com")]
+[assembly: AssemblyCopyright("(C) CD / DVD Spindle Search Authors")]
 [assembly: AssemblyCulture("")]		
-[assembly: AssemblyVersion("1.3")]
+[assembly: AssemblyVersion("1.3.1")]
 
 [assembly: AssemblyDelaySign(false)]
 [assembly: AssemblyKeyName("")]
