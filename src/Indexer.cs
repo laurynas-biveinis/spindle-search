@@ -1,6 +1,8 @@
 //-------------------------------------------------------------------\\
 // CD / DVD Spindle Search Plugin for Google Desktop Search          \\
 // Copyright (c) 2005, Manas Tungare. http://www.manastungare.com/   \\
+// Copyright (c) 2009, 2010 spindle-search developers.               \\
+// http://code.google.com/p/spindle-search/                          \\
 //-------------------------------------------------------------------\\
 // This program is free software; you can redistribute it and/or     \\
 // modify it under the terms of the GNU General Public License       \\
@@ -16,6 +18,7 @@
 //-------------------------------------------------------------------\\
 
 using System;
+using System.ComponentModel;
 using System.Globalization;
 using System.Xml;
 using System.Web;
@@ -50,25 +53,20 @@ namespace Org.ManasTungare.SpindleSearch {
     private string _metaInfoQuery = "";
 
     /// <summary>
-    /// Event that the Indexer will raise when it indexes a file. Useful for status
-    /// updates and logging.
+    /// The background worker task that is running this indexer
     /// </summary>
-    public delegate void FileIndexedEvent(object o, FileIndexedEventArgs e);
+    private BackgroundWorker Worker;
     
-    /// <summary>
-    /// Event that the Indexer will raise when it indexes a file. Useful for status
-    /// updates and logging.
-    /// </summary>
-    public event FileIndexedEvent FileIndexed;
-
     // Plugin object is the .Net wrapper.
     Plugin spindlePlugin;
 
     /// <summary>
     /// Adds each file from this <code>Catalog</code> to the Google Desktop Search Engine.
     /// </summary>
+    /// <param name="BkgWorker">The BackgroundWorker task running this indexer.</param>
     /// <param name="catalog">an XML representation of the disk to be indexed.</param>
-    public void IndexCatalog(Catalog catalog) {  
+    public void IndexCatalog(BackgroundWorker BkgWorker, Catalog catalog) {
+      Worker = BkgWorker;
       if (spindlePlugin == null) {
         // Create an instance of Plugin object ...
         spindlePlugin = new Plugin(Application.ProductName, kPlugInDescription, kComponentGuid);
@@ -130,13 +128,9 @@ namespace Org.ManasTungare.SpindleSearch {
       fileSchema.Title = fileNode.Attributes["name"].Value;
 
       // ... and send it on its way.
-      fileSchema.Send(Google.Desktop.Schemas.Indexable.EventFlags.None);
+      fileSchema.Send(Google.Desktop.Schemas.Indexable.EventFlags.Historical);
 
-      // Tell your listeners you indexed this file
-      if (FileIndexed != null) {
-        FileIndexed(this, new FileIndexedEventArgs(fileSchema.URI) );
-        System.Windows.Forms.Application.DoEvents();
-      }
+      Worker.ReportProgress(0, "Cataloged: " + fileSchema.URI);
     }
   }
 }

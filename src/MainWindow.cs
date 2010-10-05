@@ -1,7 +1,7 @@
 //-------------------------------------------------------------------\\
 // CD / DVD Spindle Search Plugin for Google Desktop Search          \\
 // Copyright (c) 2005, Manas Tungare. http://www.manastungare.com/   \\
-// Copyright (c) 2009, spindle-search developers.                    \\
+// Copyright (c) 2009, 2010 spindle-search developers.               \\
 // http://code.google.com/p/spindle-search/                          \\
 //-------------------------------------------------------------------\\
 // This program is free software; you can redistribute it and/or     \\
@@ -469,7 +469,7 @@ namespace Org.ManasTungare.SpindleSearch {
         this.gdsLabel.AutoSize = true;
         this.gdsLabel.BackColor = System.Drawing.Color.White;
         this.gdsLabel.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-        this.gdsLabel.Location = new System.Drawing.Point(80, 40);
+        this.gdsLabel.Location = new System.Drawing.Point(66, 40);
         this.gdsLabel.Name = "gdsLabel";
         this.gdsLabel.Size = new System.Drawing.Size(164, 13);
         this.gdsLabel.TabIndex = 106;
@@ -621,54 +621,57 @@ namespace Org.ManasTungare.SpindleSearch {
     }
 
     /// <summary>
+    /// The background worker for executing indexing and other time-consuming tasks.
+    /// </summary>
+    private BackgroundWorker backgroundWorker;
+
+    /// <summary>
+    /// Information to pass to the bacground worker that performs indexing
+    /// </summary>
+    struct IndexCatalogState
+    {
+        public Catalog cat;
+        public DirectoryInfo driveToIndex;
+        public string rootUri;
+        public string catalogSaveFile;
+        public string volume;
+        public string manufacturer;
+        public string medium;
+        public string location;
+        public string comments;
+    };
+
+    /// <summary>
     /// Helper method that, well, duh, starts creating a catalog.
     /// </summary>
-    private void StartCreatingCatalog(string saveToCatalogFile) {
-      addProgressLine("Starting Catalog Creation ...");
-      
-      Catalog cat = new Catalog();
-      cat.FileCataloged += new Catalog.FileCatalogedEvent(FileCataloged);
-      string selDriveLetter = drivesList.SelectedItems[0].Text.Substring(0, 2);
-      cat.CreateCatalogFrom(new DirectoryInfo( selDriveLetter + Path.DirectorySeparatorChar ), selDriveLetter.Replace( ":", "" ).ToLower());
-      cat.AddMetaInformation("Volume", this.volumeLabel.Text.Trim());
-      cat.AddMetaInformation("Manufacturer", this.manufacturer.Text.Trim());
-      cat.AddMetaInformation("Medium", this.medium.Text.Trim());
-      cat.AddMetaInformation("Location", this.location.Text.Trim());
-      cat.AddMetaInformation("Comments", this.comments.Text.Trim());
+    /// <param name="saveToCatalogFile">A file name to save catalog to, or an empty string if the catalog shouldn't be saved.</param>
+    private void StartCreatingCatalog(string saveToCatalogFile) 
+    {
+        addProgressLine("Starting Catalog Creation ...");
 
-      // If user chose to export, write a catalog file
-      if (0 != saveToCatalogFile.Length) {
+        backgroundWorker = new BackgroundWorker();
+        backgroundWorker.WorkerReportsProgress = true;
+        backgroundWorker.DoWork += new DoWorkEventHandler(backgroundWorker_DoWorkIndexCatalog);
+        backgroundWorker.ProgressChanged += new ProgressChangedEventHandler(backgroundWorker_ProgressChanged);
+        backgroundWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(backgroundWorker_RunWorkerCompleted);
+
+        string selDriveLetter = drivesList.SelectedItems[0].Text.Substring(0, 2);
+        Catalog cat = new Catalog(backgroundWorker);
+
+        IndexCatalogState catState = new IndexCatalogState();
+        catState.cat = cat;
+        catState.driveToIndex = new DirectoryInfo(selDriveLetter + Path.DirectorySeparatorChar);
+        catState.rootUri = selDriveLetter.Replace(":", "").ToLower();
+        catState.catalogSaveFile = saveToCatalogFile;
+        catState.volume = this.volumeLabel.Text.Trim();
+        catState.manufacturer = this.manufacturer.Text.Trim();
+        catState.medium = this.medium.Text.Trim();
+        catState.location = this.location.Text.Trim();
+        catState.comments = this.comments.Text.Trim();
+
         try {
-          // First have the catalog write itself out to a MemoryStream
-          MemoryStream bufferStream = new MemoryStream();
-          cat.ExportTo( bufferStream );
-
-          // Reset seek position on MemoryStream
-          bufferStream.Seek(0, SeekOrigin.Begin);
-
-          // Now create a Zip file
-          ZipWriter zipFile = new ZipWriter(new FileInfo(saveToCatalogFile));
-          zipFile.AddStream(bufferStream, CATALOG_FILENAME_INSIDE_ZIP);
-          bufferStream.Close();
-          zipFile.Close();
+            backgroundWorker.RunWorkerAsync(catState);
         }
-        catch(Exception ex) {
-          MessageBox.Show("There was an error trying to save the catalog to disk: " + ex.Message);
-        }
-      }
-
-      addProgressLine("Adding Catalog to Google Desktop Search ...");
-
-      Indexer gds = new Indexer ();
-      gds.FileIndexed += new Indexer.FileIndexedEvent(FileIndexed);
-
-      try {
-        gds.IndexCatalog(cat);
-        addProgressLine("Completed!");
-        MessageBox.Show ("Catalog created and added successfully to Google Desktop Search.",
-          "Google Desktop Search Catalog",
-          MessageBoxButtons.OK, MessageBoxIcon.Information);
-      }
       catch(GoogleDesktopException e) {
         switch (e.GoogleErrorCode) {
           case GoogleDesktopException.GoogleErrorCodes.E_SERVICE_NOT_RUNNING:
@@ -690,6 +693,77 @@ namespace Org.ManasTungare.SpindleSearch {
             break;
         }
       }
+    }
+
+    /// <summary>
+    /// Indexes a catalog in a background thread.
+    /// </summary>
+    /// <param name="sender">The BackgroundWorker that raised this event</param>
+    /// <param name="e">The event arguments</param>
+    private void backgroundWorker_DoWorkIndexCatalog(object sender, DoWorkEventArgs e)
+    {
+        IndexCatalogState catState = (IndexCatalogState)e.Argument;
+
+        catState.cat.CreateCatalogFrom(catState.driveToIndex, catState.rootUri);
+        catState.cat.AddMetaInformation("Volume", catState.volume);
+        catState.cat.AddMetaInformation("Manufacturer", catState.manufacturer);
+        catState.cat.AddMetaInformation("Medium", catState.medium);
+        catState.cat.AddMetaInformation("Location", catState.location);
+        catState.cat.AddMetaInformation("Comments", catState.comments);
+
+        // If user chose to export, write a catalog file
+        if (0 != catState.catalogSaveFile.Length)
+        {
+            try
+            {
+                // First have the catalog write itself out to a MemoryStream
+                MemoryStream bufferStream = new MemoryStream();
+                catState.cat.ExportTo(bufferStream);
+
+                // Reset seek position on MemoryStream
+                bufferStream.Seek(0, SeekOrigin.Begin);
+
+                // Now create a Zip file
+                ZipWriter zipFile = new ZipWriter(new FileInfo(catState.catalogSaveFile));
+                zipFile.AddStream(bufferStream, CATALOG_FILENAME_INSIDE_ZIP);
+                bufferStream.Close();
+                zipFile.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("There was an error trying to save the catalog to disk: " + ex.Message);
+            }
+        }
+
+        backgroundWorker.ReportProgress(0, "Adding Catalog to Google Desktop Search ...");
+
+        Indexer gds = new Indexer();
+        gds.IndexCatalog(backgroundWorker, catState.cat);
+    }
+    
+    /// <summary>
+    /// Reports progress from the background worker thread.
+    /// </summary>
+    /// <param name="sender">The sender of this progress report</param>
+    /// <param name="e">The event arguments.  The UserState field is string containing the progress message.</param>
+    private void backgroundWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+    {
+        string ProgressMessage = e.UserState as string;
+        addProgressLine(ProgressMessage);
+    }
+
+    /// <summary>
+    /// The event handler for background worker work completion event.
+    /// </summary>
+    /// <param name="sender">The sender that completed its work</param>
+    /// <param name="e">The event arguments</param>
+    private void backgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+    {
+        addProgressLine("Completed!");
+        MessageBox.Show("Catalog created and added successfully to Google Desktop Search.",
+          "Google Desktop Search Catalog",
+          MessageBoxButtons.OK, MessageBoxIcon.Information);
+        CurrentTab = IndexerTabs.DiskTab;
     }
 
     /// <summary>
@@ -746,7 +820,6 @@ namespace Org.ManasTungare.SpindleSearch {
             Application.DoEvents();
             Cursor.Current = Cursors.WaitCursor;
             StartCreatingCatalog(saveToCatalogFile); // Don't save if blank.
-            CurrentTab = IndexerTabs.DiskTab;
           }
           break;
       }
@@ -787,25 +860,6 @@ namespace Org.ManasTungare.SpindleSearch {
           _currentTab = IndexerTabs.ProgressTab;
           break;
       }
-    }
-
-    /// <summary>
-    /// Handle events sent by the Google Desktop Indexer module; add a line to the progress log.
-    /// </summary>
-    /// <param name="o"></param>
-    /// <param name="e"></param>
-    public void FileIndexed(object o, FileIndexedEventArgs e) {
-      Console.WriteLine(e.File);
-      addProgressLine("Indexed: " + e.File);
-    }
-
-    /// <summary>
-    /// Handle events sent by the Cataloging module; add a line to the progress log.
-    /// </summary>
-    /// <param name="o"></param>
-    /// <param name="e"></param>
-    public void FileCataloged(object o, FileCatalogedEventArgs e) {
-      addProgressLine("Cataloged: " + e.File);
     }
 
     /// <summary>
@@ -866,38 +920,20 @@ namespace Org.ManasTungare.SpindleSearch {
       if (fileOpenDialog.FileNames.Length == 0)
         return;
 
-      try {
-        // Update UI
-        CurrentTab = IndexerTabs.ProgressTab;
-        Application.DoEvents();
-        Cursor.Current = Cursors.WaitCursor;
+      // Update UI
+      CurrentTab = IndexerTabs.ProgressTab;
+      Application.DoEvents(); // TODO: probably not necessary.
+      Cursor.Current = Cursors.WaitCursor;
 
-        foreach (String fileName in fileOpenDialog.FileNames) {
-          addProgressLine("Loading " + fileName + "...");
+      backgroundWorker = new BackgroundWorker();
+      backgroundWorker.WorkerReportsProgress = true;
+      backgroundWorker.DoWork += new DoWorkEventHandler(backgroundWorker_DoWorkLoadCatalogs);
+      backgroundWorker.ProgressChanged += new ProgressChangedEventHandler(backgroundWorker_ProgressChanged);
+      backgroundWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(backgroundWorker_RunWorkerCompleted);
 
-          // Open zip file
-          ZipInputStream zipStream = new ZipInputStream(File.OpenRead(fileOpenDialog.FileName));
-          ZipEntry zipEntry;
-          Catalog fromCatalogFile = new Catalog();
-          while ((zipEntry = zipStream.GetNextEntry()) != null) {
-            if (zipEntry.Name.Equals(CATALOG_FILENAME_INSIDE_ZIP)) {
-              try {
-                fromCatalogFile.LoadCatalogFrom(zipStream);
-              }
-              catch (Exception e) {
-                throw new Exception("Catalog file: " + fileName, e);
-              }
-            }
-          }
-
-          // Create Indexer 
-          Indexer gds = new Indexer();
-          gds.FileIndexed += new Indexer.FileIndexedEvent(FileIndexed);
-
-          // Start Indexing
-          gds.IndexCatalog(fromCatalogFile);
-          addProgressLine("Catalog loaded!");
-        }
+      try 
+      {
+          backgroundWorker.RunWorkerAsync(fileOpenDialog.FileNames);
       }
       catch (GoogleDesktopException ex)
       {
@@ -921,14 +957,56 @@ namespace Org.ManasTungare.SpindleSearch {
       catch (Exception e)
       {
           // FIXME: more usability, e.g. continue with the rest of the files and return a list of all failed files.
-          MessageBox.Show("One of the files you selected does not appear to be a valid Disk Catalog "
-            + "generated by Spindle Search. The file is: " + e.Message + " and the error is: "
-            + e.InnerException.Message + ". The rest of the files were not processed.",
-            "Spindle Search: Invalid Catalog File",
-            MessageBoxButtons.OK, MessageBoxIcon.Error);
+          if (e.InnerException != null)
+          {
+              MessageBox.Show("One of the files you selected does not appear to be a valid Disk Catalog "
+                + "generated by Spindle Search. The file is: " + e.Message + " and the error is: "
+                + e.InnerException.Message + ". The rest of the files were not processed.",
+                "Spindle Search Error: Invalid Catalog File",
+                MessageBoxButtons.OK, MessageBoxIcon.Error);
+          }
+          else
+              MessageBox.Show("Error: " + e.Message, "Spindle Search Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
           CurrentTab = IndexerTabs.DiskTab;
           return;
       }
+    }
+
+    /// <summary>
+    /// The DoWork event handler for the background worker that performs loading of catalogs
+    /// </summary>
+    /// <param name="sender">The background worker that invoked this handler</param>
+    /// <param name="e">The event arguments.  The field Argument contains array of strings specifying catalog names to load.</param>
+    private void backgroundWorker_DoWorkLoadCatalogs(object sender, DoWorkEventArgs e)
+    {
+        String[] catalogFileNames = e.Argument as String[];
+        foreach (String fileName in catalogFileNames)
+        {
+            backgroundWorker.ReportProgress(0, "Loading " + fileName + "...");
+
+            // Open zip file
+            ZipInputStream zipStream = new ZipInputStream(File.OpenRead(fileName));
+            ZipEntry zipEntry;
+            Catalog fromCatalogFile = new Catalog(backgroundWorker);
+            while ((zipEntry = zipStream.GetNextEntry()) != null)
+            {
+                if (zipEntry.Name.Equals(CATALOG_FILENAME_INSIDE_ZIP))
+                {
+                    try
+                    {
+                        fromCatalogFile.LoadCatalogFrom(zipStream);
+                    }
+                    catch (Exception error)
+                    {
+                        throw new Exception("Catalog file: " + fileName, error);
+                    }
+                }
+            }
+
+            Indexer gds = new Indexer();
+            gds.IndexCatalog(backgroundWorker, fromCatalogFile);
+            backgroundWorker.ReportProgress(0, "Catalog loaded!");
+        }
     }
 
     private void refreshLink_LinkClicked(object sender, System.Windows.Forms.LinkLabelLinkClickedEventArgs e) {

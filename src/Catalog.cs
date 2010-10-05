@@ -18,6 +18,7 @@
 //-------------------------------------------------------------------\\
 
 using System;
+using System.ComponentModel;
 using System.IO;
 using System.Xml;
 using System.Web;
@@ -33,8 +34,19 @@ namespace Org.ManasTungare.SpindleSearch {
     /// </summary>
     XmlDocument _xmlDoc;
 
-    public delegate void FileCatalogedEvent(object o, FileCatalogedEventArgs e);
-    public event FileCatalogedEvent FileCataloged;
+    /// <summary>
+    /// The background worker task that is running this indexer
+    /// </summary>
+    private BackgroundWorker Worker;
+
+    /// <summary>
+    /// Creates a new catalog.
+    /// </summary>
+    /// <param name="BkgWorker">The executing BackgroundWorker task of this catalog</param>
+    public Catalog(BackgroundWorker BkgWorker)
+    {
+        Worker = BkgWorker;
+    }
 
     internal XmlDocument XmlCatalog {
       get {
@@ -47,10 +59,11 @@ namespace Org.ManasTungare.SpindleSearch {
     /// </summary>
     /// <param name="directory">Directory to be indexed</param>
     public void CreateCatalogFrom(DirectoryInfo directory, string rootUri) {
-      _xmlDoc = new XmlDocument();
-      _xmlDoc.LoadXml("<disk></disk>");
-      _xmlDoc.SelectSingleNode("//disk").AppendChild( GetNodeFromDirectory(directory) );
-      ((XmlElement) _xmlDoc.SelectSingleNode("//disk")).SetAttribute("uri", rootUri);
+        // TODO: probably must be a constructor or a factory method
+        _xmlDoc = new XmlDocument();
+        _xmlDoc.LoadXml("<disk></disk>");
+        _xmlDoc.SelectSingleNode("//disk").AppendChild(GetNodeFromDirectory(directory));
+        ((XmlElement)_xmlDoc.SelectSingleNode("//disk")).SetAttribute("uri", rootUri);
     }
 
     /// <summary>
@@ -58,6 +71,7 @@ namespace Org.ManasTungare.SpindleSearch {
     /// </summary>
     /// <param name="xmlDocument">Previously-saved XML file</param>
     public void LoadCatalogFrom(FileInfo xmlDocument) {
+      // TODO: probably must be a constructor or a factory metho
       _xmlDoc = new XmlDocument();
       _xmlDoc.Load(xmlDocument.FullName);
     }
@@ -67,6 +81,7 @@ namespace Org.ManasTungare.SpindleSearch {
     /// </summary>
     /// <param name="xmlStream">Any readable stream</param>
     public void LoadCatalogFrom(Stream xmlStream) {
+      // TODO: probably must be a constructor or a factory method
       _xmlDoc = new XmlDocument();
       _xmlDoc.Load(xmlStream);
     }
@@ -131,10 +146,7 @@ namespace Org.ManasTungare.SpindleSearch {
         
         dirNode.AppendChild( fileNode );
 
-        if (FileCataloged != null) {
-          FileCataloged(this, new FileCatalogedEventArgs(fileInfo.FullName));
-          System.Windows.Forms.Application.DoEvents();
-        }
+        Worker.ReportProgress(0, "Cataloged: " + fileInfo.FullName);
       }
 
       // Then recurse for all subdirectories
