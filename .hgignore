@@ -2,3 +2,5 @@ bin
 obj
 SpindleSearch.suo
 SpindleSearch.csproj.user
+setup
+tmp
