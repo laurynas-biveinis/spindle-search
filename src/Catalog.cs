@@ -72,17 +72,6 @@ namespace Org.ManasTungare.SpindleSearch
         }
 
         /// <summary>
-        /// Loads the Catalog from a previously-saved XML file
-        /// </summary>
-        /// <param name="xmlDocument">Previously-saved XML file</param>
-        public void LoadCatalogFrom(FileInfo xmlDocument)
-        {
-            // TODO: probably must be a constructor or a factory method
-            _xmlDoc = new XmlDocument();
-            _xmlDoc.Load(xmlDocument.FullName);
-        }
-
-        /// <summary>
         /// Loads the Catalog from any readable stream.
         /// </summary>
         /// <param name="xmlStream">Any readable stream</param>
