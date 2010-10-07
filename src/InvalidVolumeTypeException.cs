@@ -28,17 +28,5 @@ namespace Org.ManasTungare.SpindleSearch
         {
             // Nothing
         }
-
-        public InvalidVolumeTypeException(string message)
-            : base(message)
-        {
-            // Nothing
-        }
-
-        public InvalidVolumeTypeException(string message, Exception e)
-            : base(message, e)
-        {
-            // Nothing
-        }
     }
 }
