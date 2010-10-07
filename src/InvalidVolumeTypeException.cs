@@ -21,7 +21,7 @@ using System;
 
 namespace Org.ManasTungare.SpindleSearch
 {
-    public class InvalidVolumeTypeException : SpindleSearchException
+    class InvalidVolumeTypeException : SpindleSearchException
     {
         public InvalidVolumeTypeException()
             : base()

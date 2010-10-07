@@ -21,7 +21,7 @@ using System;
 
 namespace Org.ManasTungare.SpindleSearch
 {
-    public class SpindleSearchException : Exception
+    class SpindleSearchException : Exception
     {
         public SpindleSearchException()
             : base()

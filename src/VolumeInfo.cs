@@ -35,7 +35,7 @@ namespace Org.ManasTungare.SpindleSearch
     /// <summary>
     /// Represents the different types of drives that may exist in a system.
     /// </summary>
-    public enum VolumeTypes
+    enum VolumeTypes
     {
         Unknown,	// The drive type cannot be determined. 
         Invalid,	// The root path is invalid. For example, no volume is mounted at the path. 
@@ -50,7 +50,7 @@ namespace Org.ManasTungare.SpindleSearch
     /// Represents the different supporting flags that may be set on a file system.
     /// </summary>
     [Flags]
-    public enum VolumeFlags
+    enum VolumeFlags
     {
         Unknown = 0x0,
         CaseSensitive = 0x00000001,
@@ -71,7 +71,7 @@ namespace Org.ManasTungare.SpindleSearch
     /// <summary>
     /// Presents information about a volume.
     /// </summary>
-    public class VolumeInfo
+    class VolumeInfo
     {
         /**********************************************************
         * Private Constants

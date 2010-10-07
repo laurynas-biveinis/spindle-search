@@ -23,7 +23,7 @@ namespace Org.ManasTungare.SpindleSearch
     /// <summary>
     /// Global constants
     /// </summary>
-    public class Global
+    class Global
     {
         public const string ISO_8601_TIME_FORMAT = "yyyy-MM-ddTHH:mm:ssZ";
     }

@@ -33,7 +33,7 @@ namespace Org.ManasTungare.SpindleSearch
     /// Since the actual file does not exist online, this dialog provides
     /// an informative message about where to locate it.
     /// </summary>
-    public class SpindleFileInfo : System.Windows.Forms.Form
+    class SpindleFileInfo : System.Windows.Forms.Form
     {
         #region Window Elements
         private System.Windows.Forms.Button okButton;

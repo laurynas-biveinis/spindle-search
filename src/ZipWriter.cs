@@ -28,7 +28,7 @@ namespace Org.ManasTungare.SpindleSearch
     /// #ziplib has been developed by Mike Krueger; the current maintainer of #ziplib is John Reilly. 
     /// For more information, see http://www.icsharpcode.net/OpenSource/SharpZipLib/
     /// </summary>
-    public class ZipWriter
+    class ZipWriter
     {
         private FileInfo _location;
         private ZipOutputStream _zipFile;

@@ -33,7 +33,7 @@ namespace Org.ManasTungare.SpindleSearch
     /// Submits available catalog data to the Google Desktop Search application
     /// for indexing.
     /// </summary>
-    public class Indexer
+    class Indexer
     {
         const string kPlugInDescription = "Search within CDs/DVDs without having to insert them in a drive.";
         const string kComponentGuid = "{4A0C1E72-9FD8-42ca-8D95-E56C3D9ADF92}";

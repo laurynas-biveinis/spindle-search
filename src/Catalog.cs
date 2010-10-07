@@ -28,7 +28,7 @@ namespace Org.ManasTungare.SpindleSearch
     /// <summary>
     /// Performs an indexing operation on items stored offline.
     /// </summary>
-    public class Catalog
+    class Catalog
     {
 
         /// <summary>

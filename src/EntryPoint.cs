@@ -29,7 +29,7 @@ namespace Org.ManasTungare.SpindleSearch
     /// <summary>
     /// Application Entry Point; examine command-line arguments and act accordingly.
     /// </summary>
-    public class EntryPoint
+    class EntryPoint
     {
         /// <summary>
         /// Go figure ...

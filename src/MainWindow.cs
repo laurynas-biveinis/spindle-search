@@ -30,7 +30,7 @@ using ICSharpCode.SharpZipLib.Zip;
 
 namespace Org.ManasTungare.SpindleSearch
 {
-    public class MainWindow : System.Windows.Forms.Form
+    class MainWindow : System.Windows.Forms.Form
     {
         #region  Window Elements
         private System.Windows.Forms.Button cancelButton;
