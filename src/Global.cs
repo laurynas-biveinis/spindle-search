@@ -26,5 +26,9 @@ namespace Org.ManasTungare.SpindleSearch
     class Global
     {
         public const string ISO_8601_TIME_FORMAT = "yyyy-MM-ddTHH:mm:ssZ";
+
+        private Global() 
+        { 
+        }
     }
 }
