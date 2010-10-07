@@ -586,17 +586,20 @@ namespace Org.ManasTungare.SpindleSearch
                 {
                     case IndexerTabs.DiskTab:
                         tabStrip.SelectedTab = driveTab;
+                        this.loadCatalogFromFile.Enabled = true;
                         this.backButton.Enabled = false;
                         this.nextButton.Enabled = true;
                         break;
                     case IndexerTabs.MetaInfoTab:
                         tabStrip.SelectedTab = metaInfoTab;
+                        this.loadCatalogFromFile.Enabled = false;
                         this.backButton.Enabled = true;
                         this.nextButton.Enabled = true;
                         break;
                     case IndexerTabs.ProgressTab:
                         tabStrip.SelectedTab = progressTab;
-                        this.backButton.Enabled = true;
+                        this.loadCatalogFromFile.Enabled = false;
+                        this.backButton.Enabled = false;
                         this.nextButton.Enabled = false;
                         break;
                 }
@@ -795,6 +798,7 @@ namespace Org.ManasTungare.SpindleSearch
             switch (CurrentTab)
             {
                 case IndexerTabs.DiskTab:
+                    Debug.Assert(false, "Back button must be disabled in the first tab");
                     break;
                 case IndexerTabs.MetaInfoTab:
                     CurrentTab = IndexerTabs.DiskTab;
@@ -845,7 +849,6 @@ namespace Org.ManasTungare.SpindleSearch
                         CurrentTab = IndexerTabs.ProgressTab;
                         Application.DoEvents();
                         Cursor.Current = Cursors.WaitCursor;
-                        backButton.Enabled = false;
                         StartCreatingCatalog(saveToCatalogFile); // Don't save if blank.
                     }
                     break;
@@ -963,7 +966,6 @@ namespace Org.ManasTungare.SpindleSearch
             CurrentTab = IndexerTabs.ProgressTab;
             Application.DoEvents(); // TODO: probably not necessary.
             Cursor.Current = Cursors.WaitCursor;
-            backButton.Enabled = false;
 
             backgroundWorker = new BackgroundWorker();
             backgroundWorker.WorkerReportsProgress = true;
