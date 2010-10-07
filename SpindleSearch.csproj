@@ -147,12 +147,6 @@
     <Compile Include="src\EntryPoint.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="src\FileCatalogedEventArgs.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="src\FileIndexedEventArgs.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="src\Global.cs">
       <SubType>Code</SubType>
     </Compile>
