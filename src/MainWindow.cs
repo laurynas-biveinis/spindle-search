@@ -469,7 +469,7 @@ namespace Org.ManasTungare.SpindleSearch
             this.manastungareWebLink.TabStop = true;
             this.manastungareWebLink.Text = "http://code.google.com/p/spindle-search/";
             this.manastungareWebLink.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            this.manastungareWebLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkManasTungare_LinkClicked);
+            this.manastungareWebLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkHomePage_LinkClicked);
             // 
             // gdsLabel
             // 
@@ -893,11 +893,11 @@ namespace Org.ManasTungare.SpindleSearch
         }
 
         /// <summary>
-        /// Open a browser to author's homepage.
+        /// Open a browser to the homepage.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void lnkManasTungare_LinkClicked(object sender, System.Windows.Forms.LinkLabelLinkClickedEventArgs e)
+        private void lnkHomePage_LinkClicked(object sender, System.Windows.Forms.LinkLabelLinkClickedEventArgs e)
         {
             try
             {
