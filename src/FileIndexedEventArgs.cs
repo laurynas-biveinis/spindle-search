@@ -19,32 +19,38 @@
 
 using System;
 
-namespace Org.ManasTungare.SpindleSearch {
-  /// <summary>
-  /// Event raised when a file is indexed.
-  /// </summary>
-  public class FileIndexedEventArgs : EventArgs {
-
+namespace Org.ManasTungare.SpindleSearch
+{
     /// <summary>
-    /// Stores the filename
+    /// Event raised when a file is indexed.
     /// </summary>
-    private string _file;
+    public class FileIndexedEventArgs : EventArgs
+    {
 
-    /// <summary>
-    /// Create new event, given a filename
-    /// </summary>
-    /// <param name="file">the file that was indexed</param>
-    public FileIndexedEventArgs (string file) : base() {
-      _file = file;
+        /// <summary>
+        /// Stores the filename
+        /// </summary>
+        private string _file;
+
+        /// <summary>
+        /// Create new event, given a filename
+        /// </summary>
+        /// <param name="file">the file that was indexed</param>
+        public FileIndexedEventArgs(string file)
+            : base()
+        {
+            _file = file;
+        }
+
+        /// <summary>
+        /// Gets the name of the file that was cataloged.
+        /// </summary>
+        public string File
+        {
+            get
+            {
+                return _file;
+            }
+        }
     }
-
-    /// <summary>
-    /// Gets the name of the file that was cataloged.
-    /// </summary>
-    public string File {
-      get {
-        return _file;
-      }
-    }
-  }
 }

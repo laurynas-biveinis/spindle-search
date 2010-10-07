@@ -19,18 +19,26 @@
 
 using System;
 
-namespace Org.ManasTungare.SpindleSearch {
-  public class SpindleSearchException : Exception {
-    public SpindleSearchException () : base() {
-      // Nothing
-    }
+namespace Org.ManasTungare.SpindleSearch
+{
+    public class SpindleSearchException : Exception
+    {
+        public SpindleSearchException()
+            : base()
+        {
+            // Nothing
+        }
 
-    public SpindleSearchException (string message) : base(message) {
-      // Nothing
+        public SpindleSearchException(string message)
+            : base(message)
+        {
+            // Nothing
+        }
+
+        public SpindleSearchException(string message, Exception e)
+            : base(message, e)
+        {
+            // Nothing
+        }
     }
-    
-    public SpindleSearchException (string message, Exception e) : base(message, e) {
-      // Nothing
-    }
-  }
 }

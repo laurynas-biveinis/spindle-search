@@ -28,7 +28,7 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyCompany("http://code.google.com/p/spindle-search/")]
 [assembly: AssemblyProduct("CD / DVD Spindle Search")]
 [assembly: AssemblyCopyright("(C) CD / DVD Spindle Search Authors")]
-[assembly: AssemblyCulture("")]		
+[assembly: AssemblyCulture("")]
 [assembly: AssemblyVersion("1.3.1.1")]
 [assembly: AssemblyDelaySign(false)]
 [assembly: AssemblyKeyName("")]

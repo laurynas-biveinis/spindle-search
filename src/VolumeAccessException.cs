@@ -19,18 +19,26 @@
 
 using System;
 
-namespace Org.ManasTungare.SpindleSearch {
-  public class VolumeAccessException : SpindleSearchException {
-    public VolumeAccessException () : base() {
-      // Nothing
-    }
+namespace Org.ManasTungare.SpindleSearch
+{
+    public class VolumeAccessException : SpindleSearchException
+    {
+        public VolumeAccessException()
+            : base()
+        {
+            // Nothing
+        }
 
-    public VolumeAccessException (string message) : base(message) {
-      // Nothing
-    }
+        public VolumeAccessException(string message)
+            : base(message)
+        {
+            // Nothing
+        }
 
-    public VolumeAccessException (string message, Exception e) : base(message, e) {
-      // Nothing
+        public VolumeAccessException(string message, Exception e)
+            : base(message, e)
+        {
+            // Nothing
+        }
     }
-  }
 }

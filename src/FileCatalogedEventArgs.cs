@@ -19,32 +19,38 @@
 
 using System;
 
-namespace Org.ManasTungare.SpindleSearch {
-  /// <summary>
-  /// Event raised when a file is added to a catalog.
-  /// </summary>
-  public class FileCatalogedEventArgs : EventArgs {
-
+namespace Org.ManasTungare.SpindleSearch
+{
     /// <summary>
-    /// Stores the filename
+    /// Event raised when a file is added to a catalog.
     /// </summary>
-    private string _file;
+    public class FileCatalogedEventArgs : EventArgs
+    {
 
-    /// <summary>
-    /// Create new event, given a filename
-    /// </summary>
-    /// <param name="file">the file that was cataloged</param>
-    public FileCatalogedEventArgs (string file) : base() {
-      _file = file;
+        /// <summary>
+        /// Stores the filename
+        /// </summary>
+        private string _file;
+
+        /// <summary>
+        /// Create new event, given a filename
+        /// </summary>
+        /// <param name="file">the file that was cataloged</param>
+        public FileCatalogedEventArgs(string file)
+            : base()
+        {
+            _file = file;
+        }
+
+        /// <summary>
+        /// Gets the name of the file that was cataloged.
+        /// </summary>
+        public string File
+        {
+            get
+            {
+                return _file;
+            }
+        }
     }
-
-    /// <summary>
-    /// Gets the name of the file that was cataloged.
-    /// </summary>
-    public string File {
-      get {
-        return _file;
-      }
-    }
-  }
 }

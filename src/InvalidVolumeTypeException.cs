@@ -19,18 +19,26 @@
 
 using System;
 
-namespace Org.ManasTungare.SpindleSearch {
-  public class InvalidVolumeTypeException : SpindleSearchException {
-    public InvalidVolumeTypeException () : base() {
-      // Nothing
-    }
+namespace Org.ManasTungare.SpindleSearch
+{
+    public class InvalidVolumeTypeException : SpindleSearchException
+    {
+        public InvalidVolumeTypeException()
+            : base()
+        {
+            // Nothing
+        }
 
-    public InvalidVolumeTypeException (string message) : base(message) {
-      // Nothing
-    }
+        public InvalidVolumeTypeException(string message)
+            : base(message)
+        {
+            // Nothing
+        }
 
-    public InvalidVolumeTypeException (string message, Exception e) : base(message, e) {
-      // Nothing
+        public InvalidVolumeTypeException(string message, Exception e)
+            : base(message, e)
+        {
+            // Nothing
+        }
     }
-  }
 }
