@@ -133,6 +133,7 @@
     </None>
     <None Include="res\spindle.psd" />
     <None Include="src\GoogleDesktop.snk" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
