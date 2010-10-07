@@ -153,26 +153,11 @@
     <Compile Include="src\Indexer.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="src\InvalidVolumeException.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="src\InvalidVolumeTypeException.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="src\MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="src\SpindleFileInfo.cs">
       <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="src\SpindleSearchException.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="src\VolumeAccessException.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="src\VolumeInfo.cs">
-      <SubType>Code</SubType>
     </Compile>
     <Compile Include="src\ZipWriter.cs">
       <SubType>Code</SubType>
