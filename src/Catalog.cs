@@ -120,15 +120,6 @@ namespace Org.ManasTungare.SpindleSearch
         }
 
         /// <summary>
-        /// Exports the internal representation of the catalog to a writeable file.
-        /// </summary>
-        /// <param name="writeableFile">A file; write privileges must be available.</param>
-        public void ExportTo(FileInfo writeableFile)
-        {
-            ExportTo(new FileStream(writeableFile.FullName, FileMode.Create, FileAccess.ReadWrite, FileShare.ReadWrite));
-        }
-
-        /// <summary>
         /// Returns an XML node for the given directory; calls itself recursively.
         /// </summary>
         /// <param name="dir">Directory to create a node for.</param>
