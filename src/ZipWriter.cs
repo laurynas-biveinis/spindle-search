@@ -45,38 +45,6 @@ namespace Org.ManasTungare.SpindleSearch
         }
 
         /// <summary>
-        /// Exactly as it says. Add a file to the zip archive.
-        /// </summary>
-        /// <param name="fileToAdd">File to add</param>
-        /// <param name="prependPath">Add a path inside the zip archive, if necessary.</param>
-        public void AddFile(FileInfo fileToAdd, string prependPath)
-        {
-            // Create a CRC record
-            Crc32 crc = new Crc32();
-
-            // Create an Entry
-            ZipEntry entry = new ZipEntry(prependPath + "\\" + fileToAdd.Name);
-            entry.DateTime = fileToAdd.LastWriteTime;
-
-
-            // Read the Contents
-            FileStream ifs = File.OpenRead(fileToAdd.FullName);
-            byte[] buffer = new byte[fileToAdd.Length];
-            ifs.Read(buffer, 0, buffer.Length);
-            entry.Size = buffer.Length;
-            ifs.Close();
-
-            // Update CRC
-            crc.Reset();
-            crc.Update(buffer);
-            entry.Crc = crc.Value;
-
-            // Put everything in the Zip file
-            _zipFile.PutNextEntry(entry);
-            _zipFile.Write(buffer, 0, buffer.Length);
-        }
-
-        /// <summary>
         /// Add bytes from a readable stream into the zip archive.
         /// </summary>
         /// <param name="stream">Stream to read from</param>
