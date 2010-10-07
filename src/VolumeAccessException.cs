@@ -28,17 +28,5 @@ namespace Org.ManasTungare.SpindleSearch
         {
             // Nothing
         }
-
-        public VolumeAccessException(string message)
-            : base(message)
-        {
-            // Nothing
-        }
-
-        public VolumeAccessException(string message, Exception e)
-            : base(message, e)
-        {
-            // Nothing
-        }
     }
 }
