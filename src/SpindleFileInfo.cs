@@ -250,7 +250,7 @@ namespace Org.ManasTungare.SpindleSearch
         /// </summary>
         /// <param name="fileName">the file to launch.</param>
         /// <returns><code>true</code> if success</returns>
-        private bool Launch(string fileName)
+        static private bool Launch(string fileName)
         {
             if (!new FileInfo(fileName).Exists
               && !new DirectoryInfo(fileName).Exists)
