@@ -23,20 +23,8 @@ namespace Org.ManasTungare.SpindleSearch
 {
     class InvalidVolumeException : SpindleSearchException
     {
-        public InvalidVolumeException(string message)
-            : base(message)
-        {
-            // Nothing
-        }
-
         public InvalidVolumeException(Uri uri)
             : base(uri.ToString())
-        {
-            // Nothing
-        }
-
-        public InvalidVolumeException(string message, Exception e)
-            : base(message, e)
         {
             // Nothing
         }
