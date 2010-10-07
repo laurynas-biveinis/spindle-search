@@ -30,7 +30,6 @@ namespace Org.ManasTungare.SpindleSearch
     /// </summary>
     class ZipWriter
     {
-        private FileInfo _location;
         private ZipOutputStream _zipFile;
 
         /// <summary>
@@ -39,7 +38,6 @@ namespace Org.ManasTungare.SpindleSearch
         /// <param name="location">Location to create the archive at</param>
         public ZipWriter(FileInfo location)
         {
-            _location = location;
             _zipFile = new ZipOutputStream(File.Create(location.FullName));
             _zipFile.SetLevel(5);
         }
