@@ -457,17 +457,5 @@ namespace Org.ManasTungare.SpindleSearch
                 return FlagSet(VolumeFlags.SupportsUnicodeOnVolume);
             }
         }
-
-
-        /**********************************************************
-         * Static Creators
-         *********************************************************/
-        static public VolumeInfo CurrentVolume
-        {
-            get
-            {
-                return new VolumeInfo(new Uri(Directory.GetDirectoryRoot(Directory.GetCurrentDirectory())));
-            }
-        }
     }
 }
