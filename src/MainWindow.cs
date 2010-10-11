@@ -868,7 +868,6 @@ namespace Org.ManasTungare.SpindleSearch
                         }
 
                         CurrentTab = IndexerTabs.ProgressTab;
-                        Application.DoEvents();
                         StartCreatingCatalog(saveToCatalogFile); // Don't save if blank.
                     }
                     break;
@@ -975,9 +974,7 @@ namespace Org.ManasTungare.SpindleSearch
             if (fileOpenDialog.FileNames.Length == 0)
                 return;
 
-            // Update UI
             CurrentTab = IndexerTabs.ProgressTab;
-            Application.DoEvents(); // TODO: probably not necessary.
 
             backgroundWorker = new BackgroundWorker();
             backgroundWorker.WorkerReportsProgress = true;
