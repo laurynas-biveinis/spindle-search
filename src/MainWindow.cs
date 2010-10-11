@@ -869,7 +869,6 @@ namespace Org.ManasTungare.SpindleSearch
 
                         CurrentTab = IndexerTabs.ProgressTab;
                         Application.DoEvents();
-                        Cursor.Current = Cursors.WaitCursor;
                         StartCreatingCatalog(saveToCatalogFile); // Don't save if blank.
                     }
                     break;
@@ -979,7 +978,6 @@ namespace Org.ManasTungare.SpindleSearch
             // Update UI
             CurrentTab = IndexerTabs.ProgressTab;
             Application.DoEvents(); // TODO: probably not necessary.
-            Cursor.Current = Cursors.WaitCursor;
 
             backgroundWorker = new BackgroundWorker();
             backgroundWorker.WorkerReportsProgress = true;
