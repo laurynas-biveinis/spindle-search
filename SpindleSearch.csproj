@@ -160,6 +160,7 @@
     <Compile Include="src\SpindleFileInfo.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="src\SpindleSearchException.cs" />
     <Compile Include="src\ZipWriter.cs">
       <SubType>Code</SubType>
     </Compile>

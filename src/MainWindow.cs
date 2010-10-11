@@ -688,33 +688,7 @@ namespace Org.ManasTungare.SpindleSearch
             catState.location = this.location.Text.Trim();
             catState.comments = this.comments.Text.Trim();
 
-            try
-            {
-                backgroundWorker.RunWorkerAsync(catState);
-            }
-            catch (GoogleDesktopException e)
-            {
-                switch (e.GoogleErrorCode)
-                {
-                    case GoogleDesktopException.GoogleErrorCodes.E_SERVICE_NOT_RUNNING:
-                        MessageBox.Show("The Google Desktop Search Service does not appear to be running. " +
-                          "\nPlease start Google Desktop Search before adding spindles to the index.",
-                          "Google Desktop Search : Not Running",
-                          MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        break;
-                    case GoogleDesktopException.GoogleErrorCodes.S_INDEXING_PAUSED:
-                        MessageBox.Show("The Google Desktop Search Service has currently been paused and no longer" +
-                          "actively indexing your content.\nPlease resume indexing before adding spindles to the index.",
-                          "Google Desktop Search : Indexing Paused",
-                          MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        break;
-                    default:
-                        MessageBox.Show("An Error Occurred: " + e.GoogleErrorCode + ": " + e.InnerException.Message,
-                          "Google Desktop Search Error",
-                          MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        break;
-                }
-            }
+            backgroundWorker.RunWorkerAsync(catState);
         }
 
         /// <summary>
@@ -726,7 +700,15 @@ namespace Org.ManasTungare.SpindleSearch
         {
             IndexCatalogState catState = (IndexCatalogState)e.Argument;
 
-            catState.cat.CreateCatalogFrom(catState.driveToIndex, catState.rootUri);
+            try
+            {
+                catState.cat.CreateCatalogFrom(catState.driveToIndex, catState.rootUri);
+            }
+            catch (IOException ioe)
+            {
+                throw new SpindleSearchException("Error accessing the specified drive: " + ioe.Message, ioe);
+            }
+
             catState.cat.AddMetaInformation("Volume", catState.volume);
             catState.cat.AddMetaInformation("Manufacturer", catState.manufacturer);
             catState.cat.AddMetaInformation("Medium", catState.medium);
@@ -736,31 +718,59 @@ namespace Org.ManasTungare.SpindleSearch
             // If user chose to export, write a catalog file
             if (0 != catState.catalogSaveFile.Length)
             {
+                // First have the catalog write itself out to a MemoryStream
+                MemoryStream bufferStream = new MemoryStream();
+                catState.cat.ExportTo(bufferStream);
+
+                // Reset seek position on MemoryStream
+                bufferStream.Seek(0, SeekOrigin.Begin);
+
+                // Now create a Zip file
                 try
                 {
-                    // First have the catalog write itself out to a MemoryStream
-                    MemoryStream bufferStream = new MemoryStream();
-                    catState.cat.ExportTo(bufferStream);
-
-                    // Reset seek position on MemoryStream
-                    bufferStream.Seek(0, SeekOrigin.Begin);
-
-                    // Now create a Zip file
                     ZipWriter zipFile = new ZipWriter(new FileInfo(catState.catalogSaveFile));
                     zipFile.AddStream(bufferStream, CATALOG_FILENAME_INSIDE_ZIP);
                     bufferStream.Close();
                     zipFile.Close();
                 }
-                catch (Exception ex)
+                catch (IOException ioe)
                 {
-                    MessageBox.Show("There was an error trying to save the catalog to disk: " + ex.Message);
+                    throw new SpindleSearchException("Error saving the catalog file: " + ioe.Message, ioe);
                 }
             }
 
             backgroundWorker.ReportProgress(0, "Adding Catalog to Google Desktop Search ...");
 
-            Indexer gds = new Indexer();
-            gds.IndexCatalog(backgroundWorker, catState.cat);
+            try
+            {
+                Indexer gds = new Indexer();
+                gds.IndexCatalog(backgroundWorker, catState.cat);
+            }
+            catch (GoogleDesktopException gde)
+            {
+                throw new SpindleSearchException(GoogleDesktopExceptionToErrorMessage(gde), gde);
+            }
+        }
+
+        /// <summary>
+        /// Returns an user-understandable error message string from GoogleDesktopException object.
+        /// </summary>
+        /// <param name="e">exception</param>
+        /// <returns>error message string</returns>
+        static private String GoogleDesktopExceptionToErrorMessage(GoogleDesktopException e)
+        {
+            switch (e.GoogleErrorCode)
+            {
+                case GoogleDesktopException.GoogleErrorCodes.E_SERVICE_NOT_RUNNING:
+                    return "The Google Desktop Service does not appear to be running.\n" +
+                           "Please start Google Desktop Search before adding spindles to the index.";
+                case GoogleDesktopException.GoogleErrorCodes.S_INDEXING_PAUSED:
+                    return "The Google Desktop Service has currently been paused and no longer is " +
+                           "actively indexing your content.\n" +
+                           "Please resume indexing before adding spindles to the index.";
+                default:
+                    return "Unhandled Google Desktop error: " + e.ToString();
+            }
         }
 
         /// <summary>
@@ -781,10 +791,21 @@ namespace Org.ManasTungare.SpindleSearch
         /// <param name="e">The event arguments</param>
         private void backgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            addProgressLine("Completed!");
-            MessageBox.Show("Catalog created and added successfully to Google Desktop Search.",
-              "Google Desktop Search Catalog",
-              MessageBoxButtons.OK, MessageBoxIcon.Information);
+            if (e.Error != null)
+            {
+                addProgressLine(e.Error.ToString());
+                if (e.Error is SpindleSearchException)
+                {
+                    MessageBox.Show(e.Error.Message, "Spindle Search Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                addProgressLine("Completed!");
+                MessageBox.Show("Catalog created and added successfully to Google Desktop Search.",
+                                "Google Desktop Search Catalog",
+                                MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
             CurrentTab = IndexerTabs.DiskTab;
         }
 
@@ -903,16 +924,9 @@ namespace Org.ManasTungare.SpindleSearch
         /// <param name="e"></param>
         private void lnkHomePage_LinkClicked(object sender, System.Windows.Forms.LinkLabelLinkClickedEventArgs e)
         {
-            try
-            {
-                ProcessStartInfo spawnBrowser = new ProcessStartInfo();
-                spawnBrowser.FileName = "http://code.google.com/p/spindle-search/";
-                Process.Start(spawnBrowser);
-            }
-            catch (Exception)
-            {
-                // Ignore
-            }
+            ProcessStartInfo spawnBrowser = new ProcessStartInfo();
+            spawnBrowser.FileName = "http://code.google.com/p/spindle-search/";
+            Process.Start(spawnBrowser);
         }
 
         /// <summary>
@@ -973,45 +987,7 @@ namespace Org.ManasTungare.SpindleSearch
             backgroundWorker.ProgressChanged += new ProgressChangedEventHandler(backgroundWorker_ProgressChanged);
             backgroundWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(backgroundWorker_RunWorkerCompleted);
 
-            try
-            {
-                backgroundWorker.RunWorkerAsync(fileOpenDialog.FileNames);
-            }
-            catch (GoogleDesktopException ex)
-            {
-                switch (ex.GoogleErrorCode)
-                {
-                    case GoogleDesktopException.GoogleErrorCodes.E_SERVICE_NOT_RUNNING:
-                        MessageBox.Show("The Google Desktop Search Service does not appear to be running. " +
-                          "\nPlease start Google Desktop Search before adding spindles to the index.",
-                          "Google Desktop Search : Not Running",
-                          MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        break;
-                    default:
-                        MessageBox.Show("An Error Occurred: " + ex.GoogleErrorCode + ": " + ex.InnerException.Message,
-                          "Google Desktop Search Error",
-                          MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        break;
-                }
-                CurrentTab = IndexerTabs.DiskTab;
-                return;
-            }
-            catch (Exception e)
-            {
-                // FIXME: more usability, e.g. continue with the rest of the files and return a list of all failed files.
-                if (e.InnerException != null)
-                {
-                    MessageBox.Show("One of the files you selected does not appear to be a valid Disk Catalog "
-                      + "generated by Spindle Search. The file is: " + e.Message + " and the error is: "
-                      + e.InnerException.Message + ". The rest of the files were not processed.",
-                      "Spindle Search Error: Invalid Catalog File",
-                      MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                else
-                    MessageBox.Show("Error: " + e.Message, "Spindle Search Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                CurrentTab = IndexerTabs.DiskTab;
-                return;
-            }
+            backgroundWorker.RunWorkerAsync(fileOpenDialog.FileNames);
         }
 
         /// <summary>
@@ -1022,33 +998,46 @@ namespace Org.ManasTungare.SpindleSearch
         private void backgroundWorker_DoWorkLoadCatalogs(object sender, DoWorkEventArgs e)
         {
             String[] catalogFileNames = e.Argument as String[];
+            String aggregateError = "";
             foreach (String fileName in catalogFileNames)
             {
                 backgroundWorker.ReportProgress(0, "Loading " + fileName + "...");
 
                 // Open zip file
-                ZipInputStream zipStream = new ZipInputStream(File.OpenRead(fileName));
-                ZipEntry zipEntry;
-                Catalog fromCatalogFile = new Catalog(backgroundWorker);
-                while ((zipEntry = zipStream.GetNextEntry()) != null)
+                try
                 {
-                    if (zipEntry.Name.Equals(CATALOG_FILENAME_INSIDE_ZIP))
+                    ZipInputStream zipStream = new ZipInputStream(File.OpenRead(fileName));
+                    ZipEntry zipEntry;
+                    Catalog fromCatalogFile = new Catalog(backgroundWorker);
+                    while ((zipEntry = zipStream.GetNextEntry()) != null)
                     {
-                        try
+                        if (zipEntry.Name.Equals(CATALOG_FILENAME_INSIDE_ZIP))
                         {
                             fromCatalogFile.LoadCatalogFrom(zipStream);
                         }
-                        catch (Exception error)
-                        {
-                            throw new Exception("Catalog file: " + fileName, error);
-                        }
                     }
-                }
 
-                Indexer gds = new Indexer();
-                gds.IndexCatalog(backgroundWorker, fromCatalogFile);
-                backgroundWorker.ReportProgress(0, "Catalog loaded!");
+                    Indexer gds = new Indexer();
+                    gds.IndexCatalog(backgroundWorker, fromCatalogFile);
+                    backgroundWorker.ReportProgress(0, "Catalog loaded!");
+                }
+                catch (IOException ioe)
+                {
+                    // TODO: look into not eating the exceptions here (AggregateException of .NET 4.0?)
+                    aggregateError += "Error loading catalog file " + fileName + ": " + ioe.Message + "\n\n";
+                }
+                catch (ZipException)
+                {
+                    aggregateError += "The file " + fileName + " does not appear to be a valid Spindle Search catalog file.\n\n";
+                }
+                catch (GoogleDesktopException gde)
+                {
+                    aggregateError += "Google Desktop error on loading catalog file " + fileName + ": "
+                        + GoogleDesktopExceptionToErrorMessage(gde) + "\n\n";
+                }
             }
+            if (!String.IsNullOrEmpty(aggregateError))
+                throw new SpindleSearchException(aggregateError);
         }
 
         private void refreshLink_LinkClicked(object sender, System.Windows.Forms.LinkLabelLinkClickedEventArgs e)
