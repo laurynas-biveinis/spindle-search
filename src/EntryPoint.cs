@@ -45,15 +45,19 @@ namespace Org.ManasTungare.SpindleSearch
             {
                 Plugin spindlePlugin = new Plugin(Application.ProductName,
                   "Search within CDs/DVDs without having to insert them in a drive.",
-                  "{4A0C1E72-9FD8-42ca-8D95-E56C3D9ADF92}");
+                  "{4A0C1E72-9FD8-42ca-8D95-E56C3D9ADF92}", "no icon");
 
                 switch (args[0])
                 {
                     case "-register":
-                        if (spindlePlugin.Register() == false)
+                        try
+                        {
+                            spindlePlugin.Register();
+                        }
+                        catch (GoogleDesktopException e)
                         {
                             Console.WriteLine(Application.ProductName + " could not be registered with Google Desktop Search.");
-                            return;
+                            Console.WriteLine(e.Message);
                         }
 
                         // Create registry keys to add a protocol handler for the "spindle://" protocol.
@@ -74,7 +78,15 @@ namespace Org.ManasTungare.SpindleSearch
                         {
                             // Unable to delete subkey because subkey does not exist.
                         }
-                        spindlePlugin.Unregister();
+                        try
+                        {
+                            spindlePlugin.Unregister();
+                        }
+                        catch (GoogleDesktopException e)
+                        {
+                            Console.WriteLine(Application.ProductName + " could not be unregistered from Google Desktop Search.");
+                            Console.WriteLine(e.Message);
+                        }
                         return;
 
                     case "-help": // Listen to all cries for help, add here if I've missed any!

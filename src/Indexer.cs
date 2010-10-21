@@ -73,7 +73,7 @@ namespace Org.ManasTungare.SpindleSearch
             if (spindlePlugin == null)
             {
                 // Create an instance of Plugin object ...
-                spindlePlugin = new Plugin(Application.ProductName, kPlugInDescription, kComponentGuid);
+                spindlePlugin = new Plugin(Application.ProductName, kPlugInDescription, kComponentGuid, "no icon");
             }
 
             // Top-level node
