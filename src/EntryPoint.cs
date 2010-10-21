@@ -43,7 +43,7 @@ namespace Org.ManasTungare.SpindleSearch
 
             if (args.Length > 0)
             {
-                Plugin spindlePlugin = new Plugin(Application.ProductName,
+                IndexingComponent spindleIndexer = new IndexingComponent(Application.ProductName,
                   "Search within CDs/DVDs without having to insert them in a drive.",
                   "{4A0C1E72-9FD8-42ca-8D95-E56C3D9ADF92}", "no icon");
 
@@ -52,7 +52,7 @@ namespace Org.ManasTungare.SpindleSearch
                     case "-register":
                         try
                         {
-                            spindlePlugin.Register();
+                            spindleIndexer.Register();
                         }
                         catch (GoogleDesktopException e)
                         {
@@ -80,7 +80,7 @@ namespace Org.ManasTungare.SpindleSearch
                         }
                         try
                         {
-                            spindlePlugin.Unregister();
+                            spindleIndexer.Unregister();
                         }
                         catch (GoogleDesktopException e)
                         {

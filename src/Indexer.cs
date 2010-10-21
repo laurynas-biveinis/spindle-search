@@ -60,7 +60,7 @@ namespace Org.ManasTungare.SpindleSearch
         private BackgroundWorker Worker;
 
         // Plugin object is the .Net wrapper.
-        Plugin spindlePlugin;
+        IndexingComponent spindleIndexer;
 
         /// <summary>
         /// Adds each file from this <code>Catalog</code> to the Google Desktop Search Engine.
@@ -70,10 +70,10 @@ namespace Org.ManasTungare.SpindleSearch
         public void IndexCatalog(BackgroundWorker BkgWorker, Catalog catalog)
         {
             Worker = BkgWorker;
-            if (spindlePlugin == null)
+            if (spindleIndexer == null)
             {
                 // Create an instance of Plugin object ...
-                spindlePlugin = new Plugin(Application.ProductName, kPlugInDescription, kComponentGuid, "no icon");
+                spindleIndexer = new IndexingComponent(Application.ProductName, kPlugInDescription, kComponentGuid, "no icon");
             }
 
             // Top-level node
@@ -129,7 +129,7 @@ namespace Org.ManasTungare.SpindleSearch
         /// <param name="containerDirUri">Uri of the directory containing this, so it can form its own Uri.</param>
         private void IndexFile(XmlNode fileNode, string containerDirUri)
         {
-            Google.Desktop.Schemas.File fileSchema = new Google.Desktop.Schemas.File(spindlePlugin);
+            Google.Desktop.Schemas.File fileSchema = new Google.Desktop.Schemas.File(spindleIndexer);
 
             // ... add specified properties
             string indexedUri = containerDirUri + "/" + HttpUtility.UrlEncode(fileNode.Attributes["name"].Value);
