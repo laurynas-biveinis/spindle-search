@@ -53,33 +53,28 @@ namespace Org.ManasTungare.SpindleSearch
                         try
                         {
                             spindleIndexer.Register();
+                            // Create registry keys to add a protocol handler for the "spindle://" protocol.
+                            // This is essential to provide a seamless experience when looking at retrieved files.
+                            RegistryKey spindleProtocolKey = Registry.ClassesRoot.CreateSubKey("spindle");
+                            spindleProtocolKey.SetValue("", "URL:Spindle Item");
+                            spindleProtocolKey.SetValue("URL Protocol", "");
+                            RegistryKey commandKey = spindleProtocolKey.CreateSubKey("shell").CreateSubKey("open").CreateSubKey("command");
+                            commandKey.SetValue("", "\"" + Application.ExecutablePath + "\" \"%1\"");
                         }
                         catch (GoogleDesktopException e)
                         {
                             Console.WriteLine(Application.ProductName + " could not be registered with Google Desktop Search.");
                             Console.WriteLine(e.Message);
                         }
-
-                        // Create registry keys to add a protocol handler for the "spindle://" protocol.
-                        // This is essential to provide a seamless experience when looking at retrieved files.
-                        RegistryKey spindleProtocolKey = Registry.ClassesRoot.CreateSubKey("spindle");
-                        spindleProtocolKey.SetValue("", "URL:Spindle Item");
-                        spindleProtocolKey.SetValue("URL Protocol", "");
-                        RegistryKey commandKey = spindleProtocolKey.CreateSubKey("shell").CreateSubKey("open").CreateSubKey("command");
-                        commandKey.SetValue("", "\"" + Application.ExecutablePath + "\" \"%1\"");
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(e.Message);
+                        }
                         break;
-
                     case "-unregister":
                         try
                         {
                             Registry.ClassesRoot.DeleteSubKeyTree("spindle");
-                        }
-                        catch (Exception)
-                        {
-                            // Unable to delete subkey because subkey does not exist.
-                        }
-                        try
-                        {
                             spindleIndexer.Unregister();
                         }
                         catch (GoogleDesktopException e)
@@ -87,7 +82,11 @@ namespace Org.ManasTungare.SpindleSearch
                             Console.WriteLine(Application.ProductName + " could not be unregistered from Google Desktop Search.");
                             Console.WriteLine(e.Message);
                         }
-                        return;
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(e.Message);
+                        }
+                        break;
 
                     case "-help": // Listen to all cries for help, add here if I've missed any!
                     case "--help":
@@ -95,7 +94,11 @@ namespace Org.ManasTungare.SpindleSearch
                     case "/h":
                     case "/?":
                         string usage = Application.ProductName +
-                          "\nCopyright 2005, Manas Tungare. http://www.manastungare.com/" +
+                          "\n(C) Copyright 2005, Manas Tungare." +
+                          "\n(C) Copyright 2009, 2010 spindle-search developers http://code.google.com/p/spindle-search/" +
+                          "\nLicense GPLv2+: GNU GPL version 2 or later <http://gnu.org/licenses/gpl.html>." +
+                          "\nThis is free software: you are free to change and redistribute it." +
+                          "\nThere is NO WARRANTY, to the extent permitted by law." +
                           "\n" +
                           "\nUsage:" +
                           "\n  -register     : register the plugin with Google Desktop Search." +
