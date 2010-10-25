@@ -198,7 +198,7 @@ namespace Org.ManasTungare.SpindleSearch
             // 
             // refreshLink
             // 
-            this.refreshLink.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.refreshLink.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.refreshLink.Location = new System.Drawing.Point(408, 16);
             this.refreshLink.Name = "refreshLink";
             this.refreshLink.Size = new System.Drawing.Size(96, 16);
@@ -530,7 +530,7 @@ namespace Org.ManasTungare.SpindleSearch
             this.Controls.Add(this.backButton);
             this.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MaximizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(546, 437);
             this.Name = "MainWindow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "CD / DVD Spindle Search for Google Desktop Search";
