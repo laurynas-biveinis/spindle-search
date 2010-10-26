@@ -1,9 +1,9 @@
 !include "MUI.nsh"
 
 # TODO: version number should be specified once in whole source tree
-outFile "SpindleSearch-1.4.0.1-beta.exe"
+outFile "SpindleSearch-1.4.0.2-beta.exe"
 
-Name "Spindle Search for Google Desktop 1.4.0.1 Beta pre-release"
+Name "Spindle Search 1.4.0.2 Beta"
 
 InstallDir "$PROGRAMFILES\Spindle Search"
 
@@ -40,7 +40,7 @@ section
 	file "..\doc\LICENSE.txt"
 	file "..\bin\Release\GoogleDesktopWrapper.dll"
 	file "..\bin\Release\ICSharpCode.SharpZipLib.dll"
-	file "..\bin\Release\Interop.GoogleDesktopAPI2.dll"
+	file "..\bin\Release\Interop.GoogleDesktopAPILib.dll"
 	file "..\bin\Release\SpindleSearch.exe"
 
 	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\SpindleSearch" \

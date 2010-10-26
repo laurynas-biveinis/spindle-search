@@ -30,7 +30,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyProduct("CD / DVD Spindle Search")]
 [assembly: AssemblyCopyright("(C) CD / DVD Spindle Search Authors")]
 [assembly: AssemblyCulture("")]
-[assembly: AssemblyVersion("1.4.0.1")]
+[assembly: AssemblyVersion("1.4.0.2")]
 [assembly: AssemblyDelaySign(false)]
 [assembly: AssemblyKeyName("")]
 
