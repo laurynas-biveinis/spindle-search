@@ -120,6 +120,7 @@
   <ItemGroup>
     <Content Include="dist\Description.txt" />
     <Content Include="doc\CHANGELOG.txt" />
+    <Content Include="doc\DEVNOTES.txt" />
     <Content Include="doc\LICENSE.txt" />
     <Content Include="doc\README.txt" />
     <Content Include="res\spindle-16x16.png" />
