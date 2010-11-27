@@ -9,6 +9,7 @@ InstallDir "$PROGRAMFILES\Spindle Search"
 
 !define MUI_ICON "..\res\Spindle.ico"
 !define MUI_UNICON "..\res\Spindle.ico"
+!define MUI_FINISHPAGE_RUN "$INSTDIR\SpindleSearch.exe"
 
 !insertMacro MUI_PAGE_WELCOME
 !insertMacro MUI_PAGE_LICENSE "..\doc\LICENSE.txt"
