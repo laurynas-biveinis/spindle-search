@@ -1,9 +1,9 @@
 !include "MUI.nsh"
 
 # TODO: version number should be specified once in whole source tree
-outFile "SpindleSearch-1.4.0.2-beta.exe"
+outFile "SpindleSearch-1.4.0.3.exe"
 
-Name "Spindle Search 1.4.0.2 Beta"
+Name "Spindle Search 1.4.0.3"
 
 InstallDir "$PROGRAMFILES\Spindle Search"
 

@@ -6,7 +6,7 @@
 --------------------------------------------------------------------------
 
  VERSION HISTORY:
-   1.4.0   TBA           Do not write a temp catalog file to application 
+   1.4.0   2010-11-29    Do not write a temp catalog file to application 
                          installation directory.
                          UI rebranding changes.
                          Do not freeze UI while performing tasks.
